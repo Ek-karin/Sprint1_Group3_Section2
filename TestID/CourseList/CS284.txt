@@ -1,0 +1,4 @@
+ID ,cs284
+NameCourse ,Introduction to Software Engineering 
+Professor.,ผศ.ดร. ทรงศักดิ์ รองวิริยะพานิช, อ.ดร.มนวรรัตน์ ผ่องไพบูลย์ ,  พัชรัตน์  มีมะโน (ผู้ช่วยสอน) 
+Score,20,20,10,50

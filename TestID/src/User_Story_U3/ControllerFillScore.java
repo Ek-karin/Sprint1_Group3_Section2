@@ -1,0 +1,84 @@
+package User_Story_U3;
+
+import java.io.IOException;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import Test_User_Story6.UploadController;
+import User_Story_U1.loginPanel;
+import User_Story_U2.CheckCourseList;
+import User_Story_U2.CourseList;
+
+
+public class ControllerFillScore {
+	private CheckCourseList checkList;
+	private String courseID;
+	private CourseList list;
+	private int tempTotalScore,score,quiz,finalScore,mid;
+	
+	public ControllerFillScore() {
+		tempTotalScore = 0;
+		checkList = new CheckCourseList();
+		list = new CourseList();
+	}
+	public ControllerFillScore(String courseID) {
+		this.courseID = courseID;
+		checkList = new CheckCourseList();
+		list = new CourseList();
+	}
+	
+	public boolean checkHaveScore(String courseID) {
+		return checkList.checkFileHaveScore(courseID);
+	}
+	
+	public boolean setScore(int score,int quiz,int mid,int finalScore) {
+		if(checkFillScore(score, quiz, mid, finalScore)) {
+			list.getCorseByCourseID(courseID).setScore(mid, finalScore, quiz,score);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	private boolean checkFillScore(int score,int quiz,int mid,int finalScore) {
+		try {
+			if(score < 0 || quiz < 0 || mid < 0 || finalScore < 0) {
+				JOptionPane.showMessageDialog(null, "Invalid Data", "Warning", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			tempTotalScore = score+quiz+mid+finalScore;
+			this.quiz = quiz;
+			this.score = score;
+			this.mid = mid;
+			this.finalScore = finalScore;
+			if(tempTotalScore < 100){
+				JOptionPane.showMessageDialog(null, "Total Score less than 100 %", "Warning", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			if(tempTotalScore > 100){
+				JOptionPane.showMessageDialog(null, "Total  Score more than 100 %");
+			 return false;
+			}
+		}catch(NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
+	
+	public void nextStepOkButton(){
+		JLabel label = new JLabel("Total score : "+tempTotalScore+"% "
+		+"Homework : "+score+"%"+" Quiz : "+quiz+"%"+" Midterm : "+mid+"%"+" FinalExam : "+finalScore+"%",JLabel.CENTER);
+		JOptionPane.showMessageDialog(null, label, courseID, JOptionPane.DEFAULT_OPTION);
+		new loginPanel();
+	}
+	public void nextStepSettingButton(){
+		try {
+			new UploadController();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
