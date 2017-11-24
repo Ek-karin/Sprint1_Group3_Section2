@@ -20,6 +20,7 @@ import javax.swing.JTable;
 
 import User_Story_U2.Course;
 import User_Story_U2.CourseList;
+import User_Story_U4.FillScoreForm;
 
 
 
@@ -103,7 +104,7 @@ public class ScoreFrame extends JFrame {
 				boolean check = checkScore.setScore(score, quiz, mid, finalScore);
 				if(check){
 					if(checkScore.nextStepOkButton(course)) {
-						System.out.println("have student list in data ready for next step !");
+						new FillScoreForm(course);
 						dispose();
 					}
 					else {
