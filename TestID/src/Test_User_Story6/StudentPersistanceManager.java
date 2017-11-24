@@ -1,6 +1,7 @@
 package Test_User_Story6;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,18 +25,22 @@ import javax.swing.table.DefaultTableModel;
 
 import org.omg.CORBA.IdentifierHelper;
 
+import User_Story_U2.Course;
+
 public class StudentPersistanceManager {
 	private ArrayList<Student> studentList = new ArrayList<>();
 	private String classListStr;
 	private boolean isWrite = false;
+	private Course course;
 
-	public StudentPersistanceManager(File file) throws IOException {
+	public StudentPersistanceManager(File file,Course course) throws IOException {
+		this.course = course;
 		studentList.clear();
 		uploadStudentList(file);
 		readList(classListStr);
 		writeTextFile();
 		isWrite(isWrite);
-		previewTable();
+		//previewTable();
 
 	}
 
@@ -108,6 +113,27 @@ public class StudentPersistanceManager {
 			bufferedWriter.write(studentList.get(i).toString() + "\n");
 		}
 		bufferedWriter.close();
+		BufferedWriter bufferedWritercsv = new BufferedWriter(new FileWriter("src/studentList"+course.getCourseID()+".csv"));
+		for(Student student : studentList) {
+			bufferedWritercsv.append(String.valueOf(student.getIndex()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getStudentID()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(student.getName());
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getHomework()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getQuiz()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getMidtermScore()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getFinalScore()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(student.getCredit());
+			bufferedWritercsv.append(System.lineSeparator());
+		}
+		bufferedWritercsv.flush();
+		bufferedWritercsv.close();
 		isWrite = true;
 	}
 

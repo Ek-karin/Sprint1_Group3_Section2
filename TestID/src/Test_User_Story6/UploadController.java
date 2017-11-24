@@ -11,19 +11,21 @@ import java.util.StringTokenizer;
 
 import javax.swing.JFileChooser;
 
+import User_Story_U2.Course;
+
 public class UploadController {
 	
-	public UploadController() throws IOException {
+	public UploadController(Course course) throws IOException {
 		JFileChooser fileChooser = new JFileChooser(".");
 		if(fileChooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {			
-			new StudentPersistanceManager(fileChooser.getSelectedFile());
+			new StudentPersistanceManager(fileChooser.getSelectedFile(),course);
 		};
 	}
 	
-	public static void main(String[] args) throws IOException {
-		new UploadController();
+	/*public static void main(String[] args) throws IOException {
+		new UploadController("cs284");
 		
 
-	}
+	}*/
 
 }

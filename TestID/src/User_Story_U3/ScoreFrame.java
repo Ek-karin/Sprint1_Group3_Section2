@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import User_Story_U2.Course;
 import User_Story_U2.CourseList;
 
 
@@ -30,6 +31,7 @@ public class ScoreFrame extends JFrame {
 	private JPanel content;
 	private CourseList list;
 	private ControllerFillScore checkScore;
+	private Course course;
 	
 	
 	public ScoreFrame() {
@@ -45,16 +47,17 @@ public class ScoreFrame extends JFrame {
 		addtoFrame();
 		addAction();
 	}
-	public ScoreFrame(Object course) {
-		checkScore = new ControllerFillScore((String)course);
+	public ScoreFrame(Course course) {
+		this.course = course;
+		checkScore = new ControllerFillScore(course);
 		list = new CourseList();
 		table = new MyTableModel();
-		setTitle((String)course);
+		setTitle(course.getCourseID());
 		//if(checkScore.checkHaveScore((String) course)) {
-			table.setValueAt(list.getCorseByCourseID((String) course).getHomeWork(), 0, 0);
-			table.setValueAt(list.getCorseByCourseID((String) course).getQuiz(), 0, 1);
-			table.setValueAt(list.getCorseByCourseID((String) course).getMidTerm(), 0, 2);
-			table.setValueAt(list.getCorseByCourseID((String) course).getFinalTerm(), 0, 3);
+			table.setValueAt(list.getCorseByCourseID(course.getCourseID()).getHomeWork(), 0, 0);
+			table.setValueAt(list.getCorseByCourseID(course.getCourseID()).getQuiz(), 0, 1);
+			table.setValueAt(list.getCorseByCourseID(course.getCourseID()).getMidTerm(), 0, 2);
+			table.setValueAt(list.getCorseByCourseID(course.getCourseID()).getFinalTerm(), 0, 3);
 		//}
 		ok = new JButton("OK");
 		setting = new JButton("Setting");
@@ -99,8 +102,13 @@ public class ScoreFrame extends JFrame {
 				int finalScore = (int) table.getValueAt(0, 3);
 				boolean check = checkScore.setScore(score, quiz, mid, finalScore);
 				if(check){
-					dispose();
-					checkScore.nextStepOkButton();
+					if(checkScore.nextStepOkButton(course)) {
+						System.out.println("have student list in data ready for next step !");
+						dispose();
+					}
+					else {
+						
+					}
 				}
 				else{
 					
@@ -111,15 +119,9 @@ public class ScoreFrame extends JFrame {
 		setting.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 	checkScore.nextStepSettingButton();
-				 	dispose();
 				}
 			
 		});
 	}
 	
-	
-	public static void main(String[] args) {
-		new ScoreFrame();
-	}
-
 }

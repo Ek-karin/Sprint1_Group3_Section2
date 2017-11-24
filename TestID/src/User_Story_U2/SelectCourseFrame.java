@@ -21,12 +21,12 @@ import javax.swing.JTable;
 import User_Story_U3.ScoreFrame;
 
 public class SelectCourseFrame extends JFrame {
-	private JComboBox box;
+	private JComboBox<String> box;
 	private JButton ok;
 	private CourseList listCourse;
 	private MyTableModel table;
 	private JPanel content;
-	private String course = "";
+	private Course course;
 	
 	public SelectCourseFrame() {
 		content = new JPanel(new BorderLayout());
@@ -62,7 +62,7 @@ public class SelectCourseFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	public void setItem(Object item) {
+	public void setItem(String item) {
 		box.addItem(item);
 	}
 	public void setItem() {
@@ -76,7 +76,7 @@ public class SelectCourseFrame extends JFrame {
 		ok.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ScoreFrame(box.getSelectedItem());
+				new ScoreFrame(listCourse.getCorseByCourseID((String) box.getSelectedItem()));
 				dispose();
 			}
 		});

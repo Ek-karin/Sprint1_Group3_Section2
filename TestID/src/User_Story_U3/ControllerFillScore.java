@@ -1,5 +1,8 @@
 package User_Story_U3;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JLabel;
@@ -8,12 +11,13 @@ import javax.swing.JOptionPane;
 import Test_User_Story6.UploadController;
 import User_Story_U1.loginPanel;
 import User_Story_U2.CheckCourseList;
+import User_Story_U2.Course;
 import User_Story_U2.CourseList;
 
 
 public class ControllerFillScore {
 	private CheckCourseList checkList;
-	private String courseID;
+	private Course course;
 	private CourseList list;
 	private int tempTotalScore,score,quiz,finalScore,mid;
 	
@@ -22,8 +26,8 @@ public class ControllerFillScore {
 		checkList = new CheckCourseList();
 		list = new CourseList();
 	}
-	public ControllerFillScore(String courseID) {
-		this.courseID = courseID;
+	public ControllerFillScore(Course course) {
+		this.course = course;
 		checkList = new CheckCourseList();
 		list = new CourseList();
 	}
@@ -34,7 +38,7 @@ public class ControllerFillScore {
 	
 	public boolean setScore(int score,int quiz,int mid,int finalScore) {
 		if(checkFillScore(score, quiz, mid, finalScore)) {
-			list.getCorseByCourseID(courseID).setScore(mid, finalScore, quiz,score);
+			list.getCorseByCourseID(((Course)course).getCourseID()).setScore(mid, finalScore, quiz,score);
 			return true;
 		}
 		else {
@@ -67,18 +71,23 @@ public class ControllerFillScore {
 		return true;
 	}
 	
-	public void nextStepOkButton(){
+	public boolean nextStepOkButton(Course course){
 		JLabel label = new JLabel("Total score : "+tempTotalScore+"% "
 		+"Homework : "+score+"%"+" Quiz : "+quiz+"%"+" Midterm : "+mid+"%"+" FinalExam : "+finalScore+"%",JLabel.CENTER);
-		JOptionPane.showMessageDialog(null, label, courseID, JOptionPane.DEFAULT_OPTION);
-		new loginPanel();
+		JOptionPane.showMessageDialog(null, label, course.getCourseID(), JOptionPane.DEFAULT_OPTION);
+		try {
+			FileInputStream stream = new FileInputStream("src/studentList"+course.getCourseID()+".csv");
+		} catch (FileNotFoundException e) {
+			System.out.println("Not have student data on this course please select student in [setting] menu before press [OK] menu");
+			return false;
+		}
+		return true;
 	}
 	public void nextStepSettingButton(){
 		try {
-			new UploadController();
+			new UploadController(course);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 }
