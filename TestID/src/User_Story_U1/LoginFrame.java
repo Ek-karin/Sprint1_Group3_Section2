@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class loginPanel extends JFrame {
+public class LoginFrame extends JFrame {
 	private JPanel center,south,input,status_btn,content;
 	private JLabel user,pass,status;
 	private JTextField id;
@@ -23,7 +23,7 @@ public class loginPanel extends JFrame {
 	private JButton btn;
 	private CheckLogIn controllerLogin;
 	
-	public loginPanel() {
+	public LoginFrame() {
 		controllerLogin = new CheckLogIn();
 		center = new JPanel();
 		south = new JPanel();
@@ -83,7 +83,7 @@ public class loginPanel extends JFrame {
 		dispose();
 	}
 	public static void main(String[] args) {
-		new loginPanel();
+		new LoginFrame();
 	}
 
 }
