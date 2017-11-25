@@ -1,4 +1,4 @@
 ID ,cs284
 NameCourse ,Introduction to Software Engineering 
 Professor.,��.��. �ç�ѡ��� �ͧ�����оҹԪ, �.��.�����ѵ�� ��ͧ侺���� ,  �Ѫ�ѵ��  ����� (�������͹) 
-Score,0,0,0,100
+Score,30,30,20,20
