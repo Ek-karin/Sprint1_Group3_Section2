@@ -21,7 +21,7 @@ import User_Story_U2.CourseFileMgr;
 import User_Story_U7.CalculateNetScore;
 
 public class FillScoreForm extends JFrame implements ActionListener{
-	private JButton setFullScoreBtn , exportBtn , sendBtn , saveBtn;
+	private JButton setFullScoreBtn , exportBtn , sendBtn , saveBtn , gradeCal;
 	private JLabel advisorName ;
 	private FillScoreController u4Contro;
 	private Course course;
@@ -61,13 +61,17 @@ public class FillScoreForm extends JFrame implements ActionListener{
 		
 		JPanel bottomPanel = new JPanel(new FlowLayout());
 		saveBtn = new JButton("Save"); 	
-		
-		saveBtn.addActionListener(this); 	 	 	 		 	 	 		 	 	 	 	 	//Save score.
+		saveBtn.addActionListener(this); 	 	 	 		 	 //Save score.
 		exportBtn = new JButton("Make File");					//Make .xls file.
-		sendBtn = new JButton("Send");							//Send to student
+		sendBtn = new JButton("Send");	 	 	 	 	 	 	 //Send to student
+		gradeCal = new JButton("Grade Calculated");
+		exportBtn.addActionListener(this);
+		sendBtn.addActionListener(this);
+		gradeCal.addActionListener(this);
 		bottomPanel.add(saveBtn);
 		bottomPanel.add(exportBtn);
 		bottomPanel.add(sendBtn);
+		bottomPanel.add(gradeCal);
 		
 		add(topPanel , BorderLayout.NORTH);
 		add(middlePanel, BorderLayout.CENTER);
@@ -87,9 +91,9 @@ public class FillScoreForm extends JFrame implements ActionListener{
 			if(checkCourse.checkFileHaveMaxRawScore(course.getCourseID()))
 			{
 			u4Contro.setScore(u4Contro.getTable());
+			u4Contro.calculatedNetScore();
 			u4Contro.wrtieFileCSV();
 			System.out.println("Save Complete.");
-			u4Contro.calculatedNetScore();
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "This course not have max score please click [set full score] button.");
@@ -97,6 +101,16 @@ public class FillScoreForm extends JFrame implements ActionListener{
 		}
 		if(e.getSource().equals(setFullScoreBtn)) {
 			new FullScoreFrame(course);
+		}
+		
+		if(e.getSource().equals(gradeCal)) {
+			System.out.println("Cal");
+		}
+		if(e.getSource().equals(exportBtn)) {
+			System.out.println("Export");
+		}
+		if(e.getSource().equals(sendBtn)) {
+			System.out.println("Send");
 		}
 		
 		

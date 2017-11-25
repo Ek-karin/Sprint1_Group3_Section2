@@ -2,7 +2,7 @@ package User_Story_U4;
 
 import java.util.ArrayList;
 
-import Test_User_Story6.Student;
+import User_Story_U6.Student;
 
 public class FillScorePersistanceForNetScore {
 	

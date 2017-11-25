@@ -1,4 +1,4 @@
-package Test_User_Story6;
+package User_Story_U6;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

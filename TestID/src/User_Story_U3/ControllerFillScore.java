@@ -8,11 +8,11 @@ import java.io.IOException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import Test_User_Story6.UploadController;
 import User_Story_U1.LoginFrame;
 import User_Story_U2.CheckCourseList;
 import User_Story_U2.Course;
 import User_Story_U2.CourseList;
+import User_Story_U6.UploadController;
 
 
 public class ControllerFillScore {

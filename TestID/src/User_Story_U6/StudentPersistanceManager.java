@@ -1,4 +1,4 @@
-package Test_User_Story6;
+package User_Story_U6;
 
 import java.awt.BorderLayout;
 
@@ -110,7 +110,7 @@ public class StudentPersistanceManager {
 	}
 
 	public void writeTextFile() throws IOException {
-		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("src/Test_User_Story6/studentList.txt"));
+		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("src/User_Story_U6/studentList.txt"));
 		for (int i = 0; i < studentList.size(); i++) {
 			bufferedWriter.write(studentList.get(i).toString() + "\n");
 		}
@@ -132,6 +132,14 @@ public class StudentPersistanceManager {
 			bufferedWritercsv.append(String.valueOf(student.getFinalScore()));
 			bufferedWritercsv.append(",");
 			bufferedWritercsv.append(student.getCredit());
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getNetHomeworkScore()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getNetQuizScore()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getNetMidtermScore()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getNetFinalScore()));
 			bufferedWritercsv.append(System.lineSeparator());
 		}
 		bufferedWritercsv.flush();

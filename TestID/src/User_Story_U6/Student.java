@@ -1,4 +1,4 @@
-package Test_User_Story6;
+package User_Story_U6;
 
 
 public class Student {
@@ -7,7 +7,8 @@ public class Student {
 	private String name;
 	private String studyDegree;
 	private String credit;
-	private int homework = 0, quiz = 0, midtermScore = 0, finalScore = 0;
+	private int homework = 0, quiz = 0, midtermScore = 0, finalScore = 0,netHomeworkScore = 0, netQuizScore = 0, netMidtermScore = 0,
+			netFinalScore = 0;
 
 	public int getIndex() {
 		return index;
@@ -80,10 +81,42 @@ public class Student {
 	public void setFinalScore(int finalScore) {
 		this.finalScore = finalScore;
 	}
+	
+	public int getNetHomeworkScore() {
+		return netHomeworkScore;
+	}
+
+	public void setNetHomeworkScore(int netHomeworkScore) {
+		this.netHomeworkScore = netHomeworkScore;
+	}
+
+	public int getNetQuizScore() {
+		return netQuizScore;
+	}
+
+	public void setNetQuizScore(int netQuizScore) {
+		this.netQuizScore = netQuizScore;
+	}
+
+	public int getNetMidtermScore() {
+		return netMidtermScore;
+	}
+
+	public void setNetMidtermScore(int netMidtermScore) {
+		this.netMidtermScore = netMidtermScore;
+	}
+
+	public int getNetFinalScore() {
+		return netFinalScore;
+	}
+
+	public void setNetFinalScore(int netFinalScore) {
+		this.netFinalScore = netFinalScore;
+	}
 
 	public String toString() {
 		return getIndex() + "," + getStudentID() + "," + getName() + "," + getHomework() +"," +getQuiz() +"," +getMidtermScore() + "," +getFinalScore()
-				+ ",,,,,,,,,,,,,,,,,";
+			+","+getCredit()+ ","+getNetHomeworkScore()+","+getNetQuizScore()+","+getNetMidtermScore()+","+getNetFinalScore()+",,,,,,,,,,,,";
 	}
 
 }

@@ -18,8 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Test_User_Story6.Student;
 import User_Story_U2.Course;
+import User_Story_U6.Student;
 
 
 
@@ -61,6 +61,14 @@ public class FillScorePresistance {
 			bufferedWritercsv.append(String.valueOf(student.getFinalScore()));
 			bufferedWritercsv.append(",");
 			bufferedWritercsv.append(student.getCredit());
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getNetHomeworkScore()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getNetQuizScore()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getNetMidtermScore()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(String.valueOf(student.getNetFinalScore()));
 			bufferedWritercsv.append(System.lineSeparator());
 		}
 		bufferedWritercsv.flush();
@@ -91,7 +99,7 @@ public class FillScorePresistance {
 		Scanner sc = new Scanner(text);
 		while(sc.hasNextLine()) {
 			String s[] = sc.nextLine().split(",");
-			if(s.length == 8) {
+			if(s.length == 12) {
 				Student temp = new Student();
 				temp.setIndex(Integer.parseInt(s[0]));
 				temp.setStudentID(Long.parseLong(s[1]));
@@ -101,6 +109,10 @@ public class FillScorePresistance {
 				temp.setMidtermScore(Integer.parseInt(s[5]));
 				temp.setFinalScore(Integer.parseInt(s[6]));
 				temp.setCredit(s[7]);
+				temp.setNetHomeworkScore(Integer.parseInt(s[8]));
+				temp.setNetQuizScore(Integer.parseInt(s[9]));
+				temp.setNetMidtermScore(Integer.parseInt(s[10]));
+				temp.setNetFinalScore(Integer.parseInt(s[11]));
 				list.add(temp);
 			}
 		}
@@ -164,4 +176,15 @@ public class FillScorePresistance {
 		this.list = list;
 	}
 	
+	public ArrayList<Student> setMaxScore(ArrayList<Student> student,ArrayList<Integer> maxHome,ArrayList<Integer> maxQuiz,ArrayList<Integer> maxMid,ArrayList<Integer> maxFinal) {
+		this.list = student;
+		for(int i = 0; i <student.size() ;i++) {
+			student.get(i).setNetHomeworkScore(maxHome.get(i));
+			student.get(i).setNetQuizScore(maxQuiz.get(i));
+			student.get(i).setNetMidtermScore(maxMid.get(i));
+			student.get(i).setNetFinalScore(maxFinal.get(i));
+		}
+		list = student;
+		return list;
+	}
 }

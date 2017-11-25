@@ -19,9 +19,9 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
-import Test_User_Story6.Student;
 import User_Story_U2.CheckCourseList;
 import User_Story_U2.Course;
+import User_Story_U6.Student;
 import User_Story_U7.CalculateNetScore;
 
 
@@ -209,6 +209,7 @@ public class FillScoreController {
 			System.out.println("["+studentList.get(i).getStudentID()+" : HomeworkNet: "+homeworkNet.get(i)+" QuizNet: "+quizNet.get(i)
 			+" MidtermNet: "+midtermNet.get(i)+" FinalNet: "+finalNet.get(i)+"]");
 		}
+		studentList = persis.setMaxScore(studentList, homeworkNet, quizNet, midtermNet, finalNet);
 	}
 	
 }
