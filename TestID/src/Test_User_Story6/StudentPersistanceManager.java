@@ -32,6 +32,8 @@ public class StudentPersistanceManager {
 	private String classListStr;
 	private boolean isWrite = false;
 	private Course course;
+	private final String FILE_PATH = "./StudentList/studentList";
+	private final String FILE_TYPE = ".csv";
 
 	public StudentPersistanceManager(File file,Course course) throws IOException {
 		this.course = course;
@@ -113,7 +115,7 @@ public class StudentPersistanceManager {
 			bufferedWriter.write(studentList.get(i).toString() + "\n");
 		}
 		bufferedWriter.close();
-		BufferedWriter bufferedWritercsv = new BufferedWriter(new FileWriter("src/studentList"+course.getCourseID()+".csv"));
+		BufferedWriter bufferedWritercsv = new BufferedWriter(new FileWriter(FILE_PATH+course.getCourseID()+FILE_TYPE));
 		for(Student student : studentList) {
 			bufferedWritercsv.append(String.valueOf(student.getIndex()));
 			bufferedWritercsv.append(",");

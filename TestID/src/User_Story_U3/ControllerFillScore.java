@@ -20,6 +20,8 @@ public class ControllerFillScore {
 	private Course course;
 	private CourseList list;
 	private int tempTotalScore,score,quiz,finalScore,mid;
+	private final String FILE_PATH = "./StudentList/studentList";
+	private final String FILE_TYPE = ".csv";
 	
 	public ControllerFillScore() {
 		tempTotalScore = 0;
@@ -76,7 +78,7 @@ public class ControllerFillScore {
 		+"Homework : "+score+"%"+" Quiz : "+quiz+"%"+" Midterm : "+mid+"%"+" FinalExam : "+finalScore+"%",JLabel.CENTER);
 		JOptionPane.showMessageDialog(null, label, course.getCourseID(), JOptionPane.DEFAULT_OPTION);
 		try {
-			FileInputStream stream = new FileInputStream("src/studentList"+course.getCourseID()+".csv");
+			FileInputStream stream = new FileInputStream(FILE_PATH+course.getCourseID()+FILE_TYPE);
 		} catch (FileNotFoundException e) {
 			System.out.println("Not have student data on this course please select student in [setting] menu before press [OK] menu");
 			return false;
