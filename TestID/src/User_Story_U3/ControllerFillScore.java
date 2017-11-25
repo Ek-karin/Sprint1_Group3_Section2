@@ -74,8 +74,8 @@ public class ControllerFillScore {
 	}
 	
 	public boolean nextStepOkButton(Course course){
-		JLabel label = new JLabel("Total score : "+tempTotalScore+"% "
-		+"Homework : "+score+"%"+" Quiz : "+quiz+"%"+" Midterm : "+mid+"%"+" FinalExam : "+finalScore+"%",JLabel.CENTER);
+		JLabel label = new JLabel("Total score : "+tempTotalScore+"% [ "
+		+"Homework : "+score+"%"+" Quiz : "+quiz+"%"+" Midterm : "+mid+"%"+" FinalExam : "+finalScore+"% ]",JLabel.CENTER);
 		JOptionPane.showMessageDialog(null, label, course.getCourseID(), JOptionPane.DEFAULT_OPTION);
 		try {
 			FileInputStream stream = new FileInputStream(FILE_PATH+course.getCourseID()+FILE_TYPE);

@@ -12,47 +12,63 @@ public class CheckCourseList
 {
 	private CourseFileMgr courseFileMgr;
 	private CourseList courseList;
+
 	public CheckCourseList()
 	{
 		courseFileMgr = new CourseFileMgr();
-		courseList =  courseFileMgr.courseList();
+		courseList = courseFileMgr.courseList();
 	}
+
 	public boolean checkCourse(String name)
-	{	
+	{
 		ArrayList<String> nameList = new ArrayList<>();
 		nameList = courseList.getCourseIDList();
 		boolean check = false;
 		for (String n : nameList)
 		{
-			if(n.contains(name.toLowerCase()))
+			if (n.contains(name.toLowerCase()))
 				check = true;
 		}
-		return check;		
+		return check;
 	}
+
 	public boolean checkFileHaveScore(String courseID)
 	{
-		if(courseList.getCorseByCourseID(courseID).getMidTerm()==-1||
-				courseList.getCorseByCourseID(courseID).getFinalTerm()==-1||courseList.getCorseByCourseID(courseID).getQuiz()==-1)
+		if (courseList.getCorseByCourseID(courseID).getMidTerm() == -1
+				|| courseList.getCorseByCourseID(courseID).getFinalTerm() == -1
+				|| courseList.getCorseByCourseID(courseID).getQuiz() == -1
+				|| courseList.getCorseByCourseID(courseID).getHomeWork() == -1)
 		{
-			
+
 			return false;
-		}
-		else
+		} else
 			return true;
-		
+
 	}
-	public void setScore(int midTerm,int finalTerm,int quiz,int homeWork,String courseID)
+
+	public boolean checkFileHaveMaxRawScore(String courseID)
 	{
-		if(checkCourse(courseID))
+		if (courseList.getCorseByCourseID(courseID).getMaxRawScoreMidTerm() == -1
+				|| courseList.getCorseByCourseID(courseID).getMaxRawScoreFinalTerm() == -1
+				|| courseList.getCorseByCourseID(courseID).getMaxRawScoreQuiz() == -1
+				|| courseList.getCorseByCourseID(courseID).getMaxRawScoreHomeWork() == -1)
 		{
-			if(midTerm>-1&&finalTerm>-1&&quiz>-1)
+			return false;
+		} else
+			return true;
+
+	}
+
+	public void setScore(int midTerm, int finalTerm, int quiz, int homeWork, String courseID)
+	{
+		if (checkCourse(courseID))
+		{
+			if (midTerm > -1 && finalTerm > -1 && quiz > -1)
 			{
-				courseList.getCorseByCourseID(courseID).setScore(midTerm, finalTerm, quiz,homeWork);
-			}
-			else
+				courseList.getCorseByCourseID(courseID).setScore(midTerm, finalTerm, quiz, homeWork);
+			} else
 				System.out.println("Don't input less than 0");
-			
+
 		}
 	}
 }
-

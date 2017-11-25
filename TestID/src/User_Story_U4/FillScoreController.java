@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.Timer;
 
 import Test_User_Story6.Student;
+import User_Story_U2.CheckCourseList;
 import User_Story_U2.Course;
 import User_Story_U7.CalculateNetScore;
 
@@ -30,23 +31,47 @@ public class FillScoreController {
 	private ArrayList<Student> studentList;
 	private Course course;
 	private FillScorePresistance persis;
-	
+
 	public FillScoreController(Course course) {
 		studentList = new ArrayList<>();
 		this.course = course;
 		persis = new FillScorePresistance(course);
 	}
 	
-	public int checkScore(String str) throws StudentNumberFormatException, StudentScoreLessThanZero{
+	public int checkScore(String str,String type) throws StudentNumberFormatException, StudentScoreLessThanZero, StudentScoreMoreThanMax{
 		try{
+			int checkMax[] = new int[] {course.getMaxRawScoreHomeWork(),course.getMaxRawScoreQuiz(),course.getMaxRawScoreMidTerm(),course.getMaxRawScoreFinalTerm()};
+			String temp[] = new String[] {"Homework","Quiz","Midterm","Final"};
+			int index = 0;
+			for(int i = 0;i < temp.length ;i++) {
+				if(type.equalsIgnoreCase(temp[i])) {
+					index = i;
+					break;
+				}
+			}
 			int score = Integer.parseInt(str);
 			if(score < 0){
 				throw new StudentScoreLessThanZero();
 			}
-			return score;
+			else {
+					if(score > checkMax[index]){
+						throw new StudentScoreMoreThanMax();
+					}
+					else {
+						return score;
+					}
+			}
 		}catch(NumberFormatException e){
 			throw new StudentNumberFormatException();
 		}
+	}
+	
+	public int checkMaxScore(int temp) throws MaxScoreLessThanZero {
+		if(temp < 0) {
+			throw new MaxScoreLessThanZero();
+		}
+		
+		return temp;
 	}
 	
 	public void setScore(JTable table) {
@@ -58,8 +83,8 @@ public class FillScoreController {
 			for(int j = 0;j < table.getColumnCount();j++) {
 				try{
 					int temp = 0;
-					if(j >= 3){
-						temp = checkScore(table.getValueAt(i, j).toString());
+					if(j >= 3 && j < 7){
+						temp = checkScore(table.getValueAt(i, j).toString(),table.getColumnName(j));
 					}
 				 	if(j==0)
 				 		student.setIndex(Integer.parseUnsignedInt(table.getValueAt(i, j).toString()));
@@ -82,8 +107,12 @@ public class FillScoreController {
 					listFail+=student.getStudentID()+" : "+e.getMessage()+System.lineSeparator();
 					check = false;
 				}
-				catch(StudentScoreLessThanZero temp){
-					listFail+=student.getStudentID()+" : "+temp.getMessage()+System.lineSeparator();
+				catch (StudentScoreMoreThanMax e) {
+					listFail+=student.getStudentID()+" : "+e.getMessage()+System.lineSeparator();
+					check =false;
+				}
+				catch(StudentScoreLessThanZero e){
+					listFail+=student.getStudentID()+" : "+e.getMessage()+System.lineSeparator();
 					check =false;
 					//JOptionPane.showMessageDialog(null, temp.getMessage());
 				}
@@ -98,6 +127,40 @@ public class FillScoreController {
 			error.add(new JScrollPane(text));
 			JOptionPane.showMessageDialog(null, error, "List Fail", JOptionPane.DEFAULT_OPTION);
 		}
+	}
+	
+	public void setMaxScore(JTable table) {
+		int homeMax = 0;
+		int quizMax = 0;
+		int midMax = 0;
+		int finalMax = 0;
+		String error = "";
+		for(int i = 0;i<table.getRowCount();i++) {
+			for(int j = 0; j < table.getColumnCount();j++) {
+				try {
+					int temp = checkMaxScore((int) table.getValueAt(i, j));
+					if(j == 0)
+						homeMax = temp;
+					if(j == 1)
+						quizMax = temp;
+					if(j == 2)
+						midMax = temp;
+					if(j == 3)
+						finalMax = temp;
+				} catch (MaxScoreLessThanZero e) {
+					error+=table.getColumnName(j)+" "+e.getMessage()+System.lineSeparator();
+				}	
+			}
+		}
+		if(!error.isEmpty()) {
+			JTextArea text = new JTextArea(error);
+			text.setEditable(false);
+			JPanel fail = new JPanel(new BorderLayout());
+			fail.setPreferredSize(new Dimension(300, 150));
+			fail.add(new JScrollPane(text));
+			JOptionPane.showMessageDialog(null, fail, "List Fail", JOptionPane.DEFAULT_OPTION);
+		}
+		course.setMaxRawScore(midMax, finalMax, quizMax, homeMax);
 	}
 	
 	public void wrtieFileCSV() {
@@ -123,10 +186,10 @@ public class FillScoreController {
 	
 	public void calculatedNetScore() {
 		FillScorePersistanceForNetScore f = new FillScorePersistanceForNetScore(studentList);
-		CalculateNetScore calHomework = new CalculateNetScore(f.getStudentHomeWorkScore(), course.getHomeWork(), 10);
-		CalculateNetScore calQuiz = new CalculateNetScore(f.getStudentQuizScore(), course.getQuiz(), 20);
-		CalculateNetScore calMidterm = new CalculateNetScore(f.getStudentMidtermScore(), course.getMidTerm(), 30);
-		CalculateNetScore calFinal = new CalculateNetScore(f.getStudentFinalScore()	, course.getFinalTerm(), 40);
+		CalculateNetScore calHomework = new CalculateNetScore(f.getStudentHomeWorkScore(), course.getHomeWork(), course.getMaxRawScoreHomeWork());
+		CalculateNetScore calQuiz = new CalculateNetScore(f.getStudentQuizScore(), course.getQuiz(), course.getMaxRawScoreQuiz());
+		CalculateNetScore calMidterm = new CalculateNetScore(f.getStudentMidtermScore(), course.getMidTerm(), course.getMaxRawScoreMidTerm());
+		CalculateNetScore calFinal = new CalculateNetScore(f.getStudentFinalScore()	, course.getFinalTerm(), course.getMaxRawScoreFinalTerm());
 		ArrayList<Integer> homeworkNet = null;
 		ArrayList<Integer> quizNet = null;
 		ArrayList<Integer> midtermNet = null;

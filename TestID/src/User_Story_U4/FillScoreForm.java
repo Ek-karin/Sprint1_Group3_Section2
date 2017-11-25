@@ -10,11 +10,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import User_Story_U2.CheckCourseList;
 import User_Story_U2.Course;
+import User_Story_U2.CourseFileMgr;
 import User_Story_U7.CalculateNetScore;
 
 public class FillScoreForm extends JFrame implements ActionListener{
@@ -23,12 +26,14 @@ public class FillScoreForm extends JFrame implements ActionListener{
 	private FillScoreController u4Contro;
 	private Course course;
 	private JScrollPane scrollPane;
+	private CheckCourseList checkCourse;
 	
 	public FillScoreForm(Course course) {
 		this.course = course;
 		u4Contro = new FillScoreController(course);
 		u4Contro.readFileCSV();
-		//setSize(800, 600);
+		checkCourse = new CheckCourseList();
+		setSize(800, 600);
 		setTitle("FillScoreForm");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -67,7 +72,7 @@ public class FillScoreForm extends JFrame implements ActionListener{
 		add(topPanel , BorderLayout.NORTH);
 		add(middlePanel, BorderLayout.CENTER);
 		add(bottomPanel, BorderLayout.SOUTH);
-		pack();
+		//pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
@@ -79,13 +84,19 @@ public class FillScoreForm extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(saveBtn)) {
+			if(checkCourse.checkFileHaveMaxRawScore(course.getCourseID()))
+			{
 			u4Contro.setScore(u4Contro.getTable());
 			u4Contro.wrtieFileCSV();
 			System.out.println("Save Complete.");
 			u4Contro.calculatedNetScore();
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "This course not have max score please click [set full score] button.");
+			}
 		}
 		if(e.getSource().equals(setFullScoreBtn)) {
-			new FullScoreFrame();
+			new FullScoreFrame(course);
 		}
 		
 		
