@@ -7,10 +7,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -23,6 +26,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.omg.CORBA.IdentifierHelper;
 
 import User_Story_U2.Course;
@@ -33,26 +39,26 @@ public class StudentPersistanceManager {
 	private boolean isWrite = false;
 	private Course course;
 	private final String FILE_PATH = "./StudentList/studentList";
-	private final String FILE_TYPE = ".csv";
+	private final String FILE_TYPE = ".xlsx";
+	private static final String FILE_ENCODE = "UTF-8";
 
-	public StudentPersistanceManager(File file,Course course) throws IOException {
+	public StudentPersistanceManager(File file, Course course) throws IOException {
 		this.course = course;
 		studentList.clear();
 		uploadStudentList(file);
 		readList(classListStr);
 		writeTextFile();
 		isWrite(isWrite);
-		//previewTable();
+		// previewTable();
 
 	}
-	
+
 	public StudentPersistanceManager(ArrayList<Student> studentlist) {
 		this.studentList = studentlist;
 	}
 
 	public void previewTable() {
-		String[] column = { "No.", "Student_ID", "Student_Name", "Homework", "Quiz",
-				"Midterm", "Final" };
+		String[] column = { "No.", "Student_ID", "Student_Name", "Homework", "Quiz", "Midterm", "Final" };
 		Object[][] data = null;
 		data = new Object[studentList.size()][column.length];
 		for (int i = 0; i < studentList.size(); i++) {
@@ -80,10 +86,10 @@ public class StudentPersistanceManager {
 		jTable.getColumnModel().getColumn(1).setPreferredWidth(50);
 		jTable.getColumnModel().getColumn(0).setPreferredWidth(3);
 		jTable.getColumnModel().getColumn(2).setPreferredWidth(170);
-		for(int i=3 ;i<7;i++) {
+		for (int i = 3; i < 7; i++) {
 			jTable.getColumnModel().getColumn(i).setPreferredWidth(50);
 		}
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(jTable);
 
@@ -91,7 +97,7 @@ public class StudentPersistanceManager {
 		tableFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel tablePanel = new JPanel(new BorderLayout());
-		tablePanel.setPreferredSize(new Dimension(jTable.getColumnCount()*100,500));
+		tablePanel.setPreferredSize(new Dimension(jTable.getColumnCount() * 100, 500));
 
 		tablePanel.add(scrollPane);
 		tableFrame.getContentPane().add(tablePanel, BorderLayout.CENTER);
@@ -114,42 +120,55 @@ public class StudentPersistanceManager {
 	}
 
 	public void writeTextFile() throws IOException {
-		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("src/User_Story_U6/studentList.txt"));
+		Writer bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/User_Story_U6/studentList.txt"),FILE_ENCODE));
 		for (int i = 0; i < studentList.size(); i++) {
 			bufferedWriter.write(studentList.get(i).toString() + "\n");
 		}
 		bufferedWriter.close();
-		BufferedWriter bufferedWritercsv = new BufferedWriter(new FileWriter(FILE_PATH+course.getCourseID()+FILE_TYPE));
-		for(Student student : studentList) {
-			bufferedWritercsv.append(String.valueOf(student.getIndex()));
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(String.valueOf(student.getStudentID()));
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(student.getName());
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(String.valueOf(student.getHomework()));
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(String.valueOf(student.getQuiz()));
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(String.valueOf(student.getMidtermScore()));
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(String.valueOf(student.getFinalScore()));
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(student.getCredit());
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(String.valueOf(student.getNetHomeworkScore()));
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(String.valueOf(student.getNetQuizScore()));
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(String.valueOf(student.getNetMidtermScore()));
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(String.valueOf(student.getNetFinalScore()));
-			bufferedWritercsv.append(",");
-			bufferedWritercsv.append(student.getGrade());
-			bufferedWritercsv.append(System.lineSeparator());
+		try {
+			XSSFWorkbook workBook = new XSSFWorkbook();
+			XSSFSheet sheet = workBook.createSheet("sheet1");
+			int RowNum = 0;
+			XSSFRow rowFirst = sheet.createRow(RowNum);
+			rowFirst.createCell(0).setCellValue("No.");
+			rowFirst.createCell(1).setCellValue("Student ID");
+			rowFirst.createCell(2).setCellValue("Name Lastname");
+			rowFirst.createCell(3).setCellValue("Homework Score");
+			rowFirst.createCell(4).setCellValue("Quiz Score");
+			rowFirst.createCell(5).setCellValue("Midterm Score");
+			rowFirst.createCell(6).setCellValue("Final Score");
+			rowFirst.createCell(7).setCellValue("HomeworkNet Score");
+			rowFirst.createCell(8).setCellValue("QuizNet Score");
+			rowFirst.createCell(9).setCellValue("MidtermNet Score");
+			rowFirst.createCell(10).setCellValue("FinalNet Score");
+			rowFirst.createCell(11).setCellValue("Grade");
+			RowNum++;
+			for(Student s : studentList) {
+				XSSFRow row = sheet.createRow(RowNum);
+				row.createCell(0).setCellValue(s.getIndex());
+				row.createCell(1).setCellValue(s.getStudentID());
+				row.createCell(2).setCellValue(s.getName());
+				row.createCell(3).setCellValue(s.getHomework());
+				row.createCell(4).setCellValue(s.getQuiz());
+				row.createCell(5).setCellValue(s.getMidtermScore());
+				row.createCell(6).setCellValue(s.getFinalScore());
+				row.createCell(7).setCellValue(s.getNetHomeworkScore());
+				row.createCell(8).setCellValue(s.getNetQuizScore());
+				row.createCell(9).setCellValue(s.getNetMidtermScore());
+				row.createCell(10).setCellValue(s.getNetFinalScore());
+				row.createCell(11).setCellValue(s.getGrade());
+				RowNum++;
+			}
+			
+		FileOutputStream fileout = new FileOutputStream(FILE_PATH+course.getCourseID()+FILE_TYPE);
+		workBook.write(fileout);
+		fileout.close();
+		System.out.println("Done");
+		
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
-		bufferedWritercsv.flush();
-		bufferedWritercsv.close();
+		
 		isWrite = true;
 	}
 
@@ -210,8 +229,8 @@ public class StudentPersistanceManager {
 			count++;
 		}
 	}
-	
-	public ArrayList<Student> getList(){
+
+	public ArrayList<Student> getList() {
 		return studentList;
 	}
 

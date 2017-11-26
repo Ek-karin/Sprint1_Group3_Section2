@@ -109,7 +109,10 @@ public class FillScoreForm extends JFrame implements ActionListener{
 			u4Contro.nextStep("calgrade");
 		}
 		if(e.getSource().equals(exportBtn)) {
-			System.out.println("Export");
+			u4Contro.setScore(u4Contro.getTable());
+			u4Contro.calculatedNetScore();
+			u4Contro.readFileCSV();
+			u4Contro.nextStep("export");
 		}
 		if(e.getSource().equals(sendBtn)) {
 			System.out.println("Send");

@@ -21,7 +21,7 @@ public class ControllerFillScore {
 	private CourseList list;
 	private int tempTotalScore,score,quiz,finalScore,mid;
 	private final String FILE_PATH = "./StudentList/studentList";
-	private final String FILE_TYPE = ".csv";
+	private final String FILE_TYPE = ".xlsx";
 	
 	public ControllerFillScore() {
 		tempTotalScore = 0;

@@ -21,6 +21,7 @@ import javax.swing.Timer;
 
 import User_Story_U2.CheckCourseList;
 import User_Story_U2.Course;
+import User_Story_U5.WriteFileXLSX;
 import User_Story_U6.Student;
 import User_Story_U7.CalculateNetScore;
 import User_Story_U8.GradeController;
@@ -207,10 +208,6 @@ public class FillScoreController {
 				
 			}
 		}
-		/*for(int i = 0;i<studentList.size();i++) {
-			System.out.println("["+studentList.get(i).getStudentID()+" : HomeworkNet: "+homeworkNet.get(i)+" QuizNet: "+quizNet.get(i)
-			+" MidtermNet: "+midtermNet.get(i)+" FinalNet: "+finalNet.get(i)+"]");
-		}*/
 		studentList = persis.setMaxScore(studentList, homeworkNet, quizNet, midtermNet, finalNet);
 	}
 	
@@ -220,6 +217,14 @@ public class FillScoreController {
 			studentList = grade.getList();
 			wrtieFileCSV();
 			System.out.println("Calculated grade complete please open file.");
+		}
+		if(what_do_you_want.equalsIgnoreCase("export")) {
+			studentList = persis.getList();
+			if(studentList.get(0).getGrade() == null) {
+				JOptionPane.showMessageDialog(null, "Please Calculated Grade before.");
+			}else {
+				WriteFileXLSX write = new WriteFileXLSX(course, studentList);
+			}
 		}
 	}
 	

@@ -125,7 +125,7 @@ public class Student {
 
 	public String toString() {
 		return getIndex() + "," + getStudentID() + "," + getName() + "," + getHomework() +"," +getQuiz() +"," +getMidtermScore() + "," +getFinalScore()
-			+","+getCredit()+ ","+getNetHomeworkScore()+","+getNetQuizScore()+","+getNetMidtermScore()+","+getNetFinalScore()+","+getGrade()+",,,,,,,,,,,";
+			+","+getNetHomeworkScore()+","+getNetQuizScore()+","+getNetMidtermScore()+","+getNetFinalScore()+","+getGrade()+",,,,,,,,,,,";
 	}
 
 }
