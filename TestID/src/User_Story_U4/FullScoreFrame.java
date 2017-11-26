@@ -56,13 +56,13 @@ public class FullScoreFrame extends JFrame {
 		scrollPane.setViewportView(fillFullScoreTable);
 		for(int i = 0 ; i < 4 ;i++) {
 			if(i==0)
-				tableModel.setValueAt(course.getMaxRawScoreHomeWork(), 0, i);
+				tableModel.setValueAt(this.course.getMaxRawScoreHomeWork(), 0, i);
 			if(i==1)
-				tableModel.setValueAt(course.getMaxRawScoreQuiz(), 0, i);
+				tableModel.setValueAt(this.course.getMaxRawScoreQuiz(), 0, i);
 			if(i==2)
-				tableModel.setValueAt(course.getMaxRawScoreMidTerm(), 0, i);
+				tableModel.setValueAt(this.course.getMaxRawScoreMidTerm(), 0, i);
 			if(i==3)
-				tableModel.setValueAt(course.getMaxRawScoreFinalTerm(), 0, i);
+				tableModel.setValueAt(this.course.getMaxRawScoreFinalTerm(), 0, i);
 		}
 		middlePanel.add(scrollPane);
 		JPanel bottomPanel = new JPanel(new FlowLayout());

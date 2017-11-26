@@ -7,6 +7,7 @@ public class Student {
 	private String name;
 	private String studyDegree;
 	private String credit;
+	private String grade;
 	private int homework = 0, quiz = 0, midtermScore = 0, finalScore = 0,netHomeworkScore = 0, netQuizScore = 0, netMidtermScore = 0,
 			netFinalScore = 0;
 
@@ -113,10 +114,18 @@ public class Student {
 	public void setNetFinalScore(int netFinalScore) {
 		this.netFinalScore = netFinalScore;
 	}
+	
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
 
 	public String toString() {
 		return getIndex() + "," + getStudentID() + "," + getName() + "," + getHomework() +"," +getQuiz() +"," +getMidtermScore() + "," +getFinalScore()
-			+","+getCredit()+ ","+getNetHomeworkScore()+","+getNetQuizScore()+","+getNetMidtermScore()+","+getNetFinalScore()+",,,,,,,,,,,,";
+			+","+getCredit()+ ","+getNetHomeworkScore()+","+getNetQuizScore()+","+getNetMidtermScore()+","+getNetFinalScore()+","+getGrade()+",,,,,,,,,,,";
 	}
 
 }

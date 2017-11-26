@@ -45,6 +45,10 @@ public class StudentPersistanceManager {
 		//previewTable();
 
 	}
+	
+	public StudentPersistanceManager(ArrayList<Student> studentlist) {
+		this.studentList = studentlist;
+	}
 
 	public void previewTable() {
 		String[] column = { "No.", "Student_ID", "Student_Name", "Homework", "Quiz",
@@ -140,6 +144,8 @@ public class StudentPersistanceManager {
 			bufferedWritercsv.append(String.valueOf(student.getNetMidtermScore()));
 			bufferedWritercsv.append(",");
 			bufferedWritercsv.append(String.valueOf(student.getNetFinalScore()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(student.getGrade());
 			bufferedWritercsv.append(System.lineSeparator());
 		}
 		bufferedWritercsv.flush();
@@ -203,6 +209,10 @@ public class StudentPersistanceManager {
 			}
 			count++;
 		}
+	}
+	
+	public ArrayList<Student> getList(){
+		return studentList;
 	}
 
 }

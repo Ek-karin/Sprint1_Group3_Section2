@@ -1,5 +1,5 @@
 ID ,cs284
 NameCourse ,Introduction to Software Engineering 
 Professor.,อาจารย์คนที่ 1 , อาจารย์คนที่ 2 ,  อาจารย์คนที่ 3
-RawScoreMax,30,60,20,10
-Score,30,40,20,10
+RawScoreMax,30,60,20,20
+Score,30,30,20,20

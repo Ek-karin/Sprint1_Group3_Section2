@@ -23,6 +23,8 @@ import User_Story_U2.CheckCourseList;
 import User_Story_U2.Course;
 import User_Story_U6.Student;
 import User_Story_U7.CalculateNetScore;
+import User_Story_U8.GradeController;
+import User_Story_U8.NormReferenced;
 
 
 
@@ -205,11 +207,20 @@ public class FillScoreController {
 				
 			}
 		}
-		for(int i = 0;i<studentList.size();i++) {
+		/*for(int i = 0;i<studentList.size();i++) {
 			System.out.println("["+studentList.get(i).getStudentID()+" : HomeworkNet: "+homeworkNet.get(i)+" QuizNet: "+quizNet.get(i)
 			+" MidtermNet: "+midtermNet.get(i)+" FinalNet: "+finalNet.get(i)+"]");
-		}
+		}*/
 		studentList = persis.setMaxScore(studentList, homeworkNet, quizNet, midtermNet, finalNet);
+	}
+	
+	public void nextStep(String what_do_you_want) {
+		if(what_do_you_want.equalsIgnoreCase("calgrade")) {
+			GradeController grade = new GradeController(studentList);
+			studentList = grade.getList();
+			wrtieFileCSV();
+			System.out.println("Calculated grade complete please open file.");
+		}
 	}
 	
 }

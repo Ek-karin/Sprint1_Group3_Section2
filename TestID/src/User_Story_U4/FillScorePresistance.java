@@ -69,6 +69,8 @@ public class FillScorePresistance {
 			bufferedWritercsv.append(String.valueOf(student.getNetMidtermScore()));
 			bufferedWritercsv.append(",");
 			bufferedWritercsv.append(String.valueOf(student.getNetFinalScore()));
+			bufferedWritercsv.append(",");
+			bufferedWritercsv.append(student.getGrade());
 			bufferedWritercsv.append(System.lineSeparator());
 		}
 		bufferedWritercsv.flush();
@@ -99,7 +101,7 @@ public class FillScorePresistance {
 		Scanner sc = new Scanner(text);
 		while(sc.hasNextLine()) {
 			String s[] = sc.nextLine().split(",");
-			if(s.length == 12) {
+			if(s.length == 13) {
 				Student temp = new Student();
 				temp.setIndex(Integer.parseInt(s[0]));
 				temp.setStudentID(Long.parseLong(s[1]));
@@ -113,6 +115,7 @@ public class FillScorePresistance {
 				temp.setNetQuizScore(Integer.parseInt(s[9]));
 				temp.setNetMidtermScore(Integer.parseInt(s[10]));
 				temp.setNetFinalScore(Integer.parseInt(s[11]));
+				temp.setGrade(s[12]);
 				list.add(temp);
 			}
 		}
