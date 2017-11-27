@@ -53,6 +53,7 @@ public class LoginUI {
 	private JPasswordField passwordField;
 	private JTextField usernameField;
 	private CheckLogIn controllerLogin;
+	private JLabel resultLabel;
 
 	public LoginUI() {
 		initialize();
@@ -102,10 +103,10 @@ public class LoginUI {
 			}
 		});
 		
-		JLabel resultLabel = new JLabel("");
+		resultLabel = new JLabel("");
 		resultLabel.setForeground(Color.RED);
-		resultLabel.setBounds(294, 360, 351, 43);
-		resultLabel.setFont(new Font("Bangna New", Font.BOLD, 24));
+		resultLabel.setBounds(50, 263, 400, 43);
+		resultLabel.setFont(new Font("Bangna New", Font.BOLD, 20));
 		frame.getContentPane().add(resultLabel);
 		frame.getContentPane().add(confirmBtn);
 		
@@ -141,6 +142,7 @@ public class LoginUI {
 			frame.dispose();
 		}
 		else {
+			resultLabel.setText("username or password is wrong !! ");
 			passwordField.setText(null);
 		}
 	}
