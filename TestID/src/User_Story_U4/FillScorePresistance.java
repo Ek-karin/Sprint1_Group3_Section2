@@ -20,6 +20,7 @@ import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -43,6 +44,7 @@ public class FillScorePresistance {
 	private String textList;
 	private JTable jTable;
 	private Course course;
+	private final String FILE_NAME = "studentList";
 	private final String FILE_PATH = "./StudentList/studentList";
 	private final String FILE_TYPE[] = {".xlsx",".txt"};
 	private static final String FILE_ENCODE = "UTF-8";
@@ -58,19 +60,30 @@ public class FillScorePresistance {
 		try {
 			XSSFWorkbook workBook = new XSSFWorkbook();
 			XSSFSheet sheet = workBook.createSheet("sheet1");
+			for(int i =0;i < 12;i++) {
+				if(i == 1) {
+					sheet.setColumnWidth(i, 4000);
+				}
+				else if(i == 2) {
+					sheet.setColumnWidth(i, 10000);
+				}
+				else {
+					sheet.autoSizeColumn(i);
+				}
+			}
 			int RowNum = 0;
 			XSSFRow rowFirst = sheet.createRow(RowNum);
 			rowFirst.createCell(0).setCellValue("No.");
 			rowFirst.createCell(1).setCellValue("Student ID");
 			rowFirst.createCell(2).setCellValue("Name Lastname");
-			rowFirst.createCell(3).setCellValue("Homework Score");
-			rowFirst.createCell(4).setCellValue("Quiz Score");
-			rowFirst.createCell(5).setCellValue("Midterm Score");
-			rowFirst.createCell(6).setCellValue("Final Score");
-			rowFirst.createCell(7).setCellValue("HomeworkNet Score");
-			rowFirst.createCell(8).setCellValue("QuizNet Score");
-			rowFirst.createCell(9).setCellValue("MidtermNet Score");
-			rowFirst.createCell(10).setCellValue("FinalNet Score");
+			rowFirst.createCell(3).setCellValue("HW_Score");
+			rowFirst.createCell(4).setCellValue("Q_Score");
+			rowFirst.createCell(5).setCellValue("Midterm_Score");
+			rowFirst.createCell(6).setCellValue("Final_Score");
+			rowFirst.createCell(7).setCellValue("HMN_Score");
+			rowFirst.createCell(8).setCellValue("QN_Score");
+			rowFirst.createCell(9).setCellValue("MidtermN_Score");
+			rowFirst.createCell(10).setCellValue("FinalN_Score");
 			rowFirst.createCell(11).setCellValue("Grade");
 			RowNum++;
 			for(Student s : studentList) {
@@ -93,11 +106,12 @@ public class FillScorePresistance {
 		FileOutputStream fileout = new FileOutputStream(FILE_PATH+course.getCourseID()+FILE_TYPE[0]);
 		workBook.write(fileout);
 		fileout.close();
-		System.out.println("Done");
 		
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
+		JOptionPane.showMessageDialog(null, "Write file complete. : ["+FILE_NAME+course.getCourseID()+FILE_TYPE[0]+"]");
 		
 	}
 	

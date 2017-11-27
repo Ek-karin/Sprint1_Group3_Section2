@@ -3,8 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="E:/Boom/Work/cs284/javamail-1.4.5/mail.jar"/>
-	<classpathentry kind="lib" path="E:/Boom/Work/cs284/wca-workbook-assistant-master/build/lib/proguard.jar"/>
 	<classpathentry kind="lib" path="E:/Boom/Work/cs284/wca-workbook-assistant-master/lib/commons-codec-1.5.jar"/>
 	<classpathentry kind="lib" path="E:/Boom/Work/cs284/wca-workbook-assistant-master/lib/commons-logging-1.1.jar"/>
 	<classpathentry kind="lib" path="E:/Boom/Work/cs284/wca-workbook-assistant-master/lib/dom4j-1.6.1.jar"/>
@@ -16,5 +14,6 @@
 	<classpathentry kind="lib" path="E:/Boom/Work/cs284/wca-workbook-assistant-master/lib/poi-ooxml-schemas-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="E:/Boom/Work/cs284/wca-workbook-assistant-master/lib/stax-api-1.0.1.jar"/>
 	<classpathentry kind="lib" path="E:/Boom/Work/cs284/wca-workbook-assistant-master/lib/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="E:/Boom/Work/cs284/javamail-1.4.5/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

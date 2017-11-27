@@ -21,6 +21,7 @@ import javax.swing.Timer;
 
 import User_Story_U2.CheckCourseList;
 import User_Story_U2.Course;
+import User_Story_U5.Mail;
 import User_Story_U5.WriteFileXLSX;
 import User_Story_U6.Student;
 import User_Story_U7.CalculateNetScore;
@@ -215,8 +216,8 @@ public class FillScoreController {
 		if(what_do_you_want.equalsIgnoreCase("calgrade")) {
 			GradeController grade = new GradeController(studentList);
 			studentList = grade.getList();
+			JOptionPane.showMessageDialog(null, "Calculated grade complete.");
 			wrtieFileCSV();
-			System.out.println("Calculated grade complete please open file.");
 		}
 		if(what_do_you_want.equalsIgnoreCase("export")) {
 			studentList = persis.getList();
@@ -226,6 +227,15 @@ public class FillScoreController {
 				WriteFileXLSX write = new WriteFileXLSX(course, studentList);
 			}
 		}
+		if(what_do_you_want.equalsIgnoreCase("send")) {
+			if(studentList.get(0).getGrade() == null) {
+				JOptionPane.showMessageDialog(null, "Please Calculated Grade before.");
+			}
+			else {
+				new Mail();
+			}
+		}
+		
 	}
 	
 }

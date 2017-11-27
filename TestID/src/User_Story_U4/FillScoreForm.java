@@ -76,15 +76,10 @@ public class FillScoreForm extends JFrame implements ActionListener{
 		add(topPanel , BorderLayout.NORTH);
 		add(middlePanel, BorderLayout.CENTER);
 		add(bottomPanel, BorderLayout.SOUTH);
-		//pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
-	/*public static void main(String[] args) {
-		new U4FillScoreForm();
-	}*/
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(saveBtn)) {
@@ -93,7 +88,6 @@ public class FillScoreForm extends JFrame implements ActionListener{
 			u4Contro.setScore(u4Contro.getTable());
 			u4Contro.calculatedNetScore();
 			u4Contro.wrtieFileCSV();
-			System.out.println("Save Complete.");
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "This course not have max score please click [set full score] button.");
@@ -115,7 +109,10 @@ public class FillScoreForm extends JFrame implements ActionListener{
 			u4Contro.nextStep("export");
 		}
 		if(e.getSource().equals(sendBtn)) {
-			System.out.println("Send");
+			u4Contro.setScore(u4Contro.getTable());
+			u4Contro.calculatedNetScore();
+			u4Contro.readFileCSV();
+			u4Contro.nextStep("send");
 		}
 		
 		

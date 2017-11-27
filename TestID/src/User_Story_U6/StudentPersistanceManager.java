@@ -36,7 +36,7 @@ import User_Story_U2.Course;
 public class StudentPersistanceManager {
 	private ArrayList<Student> studentList = new ArrayList<>();
 	private String classListStr;
-	private boolean isWrite = false;
+	private boolean isWrite = false , canRead = true;
 	private Course course;
 	private final String FILE_PATH = "./StudentList/studentList";
 	private final String FILE_TYPE = ".xlsx";
@@ -47,8 +47,10 @@ public class StudentPersistanceManager {
 		studentList.clear();
 		uploadStudentList(file);
 		readList(classListStr);
+		if(canRead) {
 		writeTextFile();
 		isWrite(isWrite);
+		}
 		// previewTable();
 
 	}
@@ -128,19 +130,30 @@ public class StudentPersistanceManager {
 		try {
 			XSSFWorkbook workBook = new XSSFWorkbook();
 			XSSFSheet sheet = workBook.createSheet("sheet1");
+			for(int i =0;i < 12;i++) {
+				if(i == 1) {
+					sheet.setColumnWidth(i, 4000);
+				}
+				else if(i == 2) {
+					sheet.setColumnWidth(i, 10000);
+				}
+				else {
+					sheet.autoSizeColumn(i);
+				}
+			}
 			int RowNum = 0;
 			XSSFRow rowFirst = sheet.createRow(RowNum);
 			rowFirst.createCell(0).setCellValue("No.");
 			rowFirst.createCell(1).setCellValue("Student ID");
 			rowFirst.createCell(2).setCellValue("Name Lastname");
-			rowFirst.createCell(3).setCellValue("Homework Score");
-			rowFirst.createCell(4).setCellValue("Quiz Score");
-			rowFirst.createCell(5).setCellValue("Midterm Score");
-			rowFirst.createCell(6).setCellValue("Final Score");
-			rowFirst.createCell(7).setCellValue("HomeworkNet Score");
-			rowFirst.createCell(8).setCellValue("QuizNet Score");
-			rowFirst.createCell(9).setCellValue("MidtermNet Score");
-			rowFirst.createCell(10).setCellValue("FinalNet Score");
+			rowFirst.createCell(3).setCellValue("HW_Score");
+			rowFirst.createCell(4).setCellValue("Q_Score");
+			rowFirst.createCell(5).setCellValue("Midterm_Score");
+			rowFirst.createCell(6).setCellValue("Final_Score");
+			rowFirst.createCell(7).setCellValue("HMN_Score");
+			rowFirst.createCell(8).setCellValue("QN_Score");
+			rowFirst.createCell(9).setCellValue("MidtermN_Score");
+			rowFirst.createCell(10).setCellValue("FinalN_Score");
 			rowFirst.createCell(11).setCellValue("Grade");
 			RowNum++;
 			for(Student s : studentList) {
@@ -173,6 +186,7 @@ public class StudentPersistanceManager {
 	}
 
 	public void readList(String classListStr) throws IOException {
+		try {
 		StringTokenizer stringTokenizer_line, stringTokenizer;
 		stringTokenizer_line = new StringTokenizer(classListStr, System.lineSeparator());
 		while (stringTokenizer_line.hasMoreTokens()) {
@@ -209,7 +223,10 @@ public class StudentPersistanceManager {
 			count = 0;
 		}
 		studentList.remove(studentList.size() - 1);
-
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, "Please select file .csv");
+			canRead = false;
+		}
 	}
 
 	public void uploadStudentList(File file) throws IOException {

@@ -80,7 +80,7 @@ public class ControllerFillScore {
 		try {
 			FileInputStream stream = new FileInputStream(FILE_PATH+course.getCourseID()+FILE_TYPE);
 		} catch (FileNotFoundException e) {
-			System.out.println("Not have student data on this course please select student in [setting] menu before press [OK] menu");
+			JOptionPane.showMessageDialog(null, "Not have student data on this course please select student in [setting] menu before press [OK] menu");
 			return false;
 		}
 		return true;

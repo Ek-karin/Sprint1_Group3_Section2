@@ -10,6 +10,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -32,35 +34,6 @@ public class WriteFileXLSX {
 	public WriteFileXLSX(Course course ,ArrayList<Student> students) {
 		this.course = course;
 		persis = new StudentPersistanceManager(students);
-		/*try {
-			String csvFile = "./StudentList/studentListcs284.csv";
-			String output = "./StudentList/studentListcs284.xlsx";
-			
-			XSSFWorkbook workBook = new XSSFWorkbook();
-			XSSFSheet sheet = workBook.createSheet("sheet1");
-			String line = null;
-			int RowNum = 0;
-			BufferedReader br = new BufferedReader(new FileReader(csvFile));
-			while((line = br.readLine())!=null) {
-				String s[] = line.split(",");
-				RowNum++;
-				XSSFRow row = sheet.createRow(RowNum);
-				int cell = 0;
-				for(int i = 0; i < s.length;i++) {
-					if(i < 3 || i == s.length-1) {
-					row.createCell(cell).setCellValue(s[i]);
-					cell++;
-					}
-				}
-			}
-		FileOutputStream fileout = new FileOutputStream(output);
-		workBook.write(fileout);
-		fileout.close();
-		System.out.println("Done");
-		
-		}catch(Exception e) {
-			System.out.println(e.getMessage());
-		}*/
 		writeFileXLSX();
 	
 	}
@@ -69,7 +42,23 @@ public class WriteFileXLSX {
 		try {
 			XSSFWorkbook workBook = new XSSFWorkbook();
 			XSSFSheet sheet = workBook.createSheet("sheet1");
+			sheet.setColumnWidth(1, 4000);
+			sheet.setColumnWidth(2, 10000);
 			int RowNum = 0;
+			XSSFRow rowTitele = sheet.createRow(RowNum);
+			rowTitele.createCell(0).setCellValue(course.getCourseID());
+			rowTitele.createCell(1).setCellValue(course.getCourseName());
+			RowNum++;
+			XSSFRow rowTName = sheet.createRow(RowNum);
+			String temp = "";
+			for(int i = 0;i<course.getProfessor().length;i++) {
+				temp+=course.getProfessor()[i]+",";
+			}
+			rowTName.createCell(0).setCellValue(temp);
+			RowNum++;
+			XSSFRow rowIntro = sheet.createRow(RowNum);
+			rowIntro.createCell(0).setCellValue("StudentList");
+			RowNum++;
 			XSSFRow rowFirst = sheet.createRow(RowNum);
 			rowFirst.createCell(0).setCellValue("No.");
 			rowFirst.createCell(1).setCellValue("Student ID");
@@ -88,8 +77,8 @@ public class WriteFileXLSX {
 		FileOutputStream fileout = new FileOutputStream(FILE_PATH+FILE_NAME+course.getCourseID()+FILE_TYPE);
 		workBook.write(fileout);
 		fileout.close();
-		System.out.println("Done");
-		
+		//System.out.println("Done");
+		JOptionPane.showMessageDialog(null, "Write file complete. : ["+FILE_NAME+course.getCourseID()+FILE_TYPE+"]");
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
