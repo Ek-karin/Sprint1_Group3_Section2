@@ -19,9 +19,10 @@ import javax.mail.internet.MimeMultipart;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import User_Story_U2.Course;
 
-public class Mail {
+public class Mail implements Runnable
+{
+	
 	private static Properties props;
 	private final String username = "studenttestmail284@gmail.com"; // ur email
 	private final String password = "cs284284";
@@ -29,27 +30,37 @@ public class Mail {
 	// private static String recipient = "ppinggii@gmail.com";
 	private File file;
 	private MailPersisance mailPersis;
-
-	public Mail(Course course) {
+	private String recipient;
+	
+	public Mail(File file,String recipient) {
 		props = new Properties();
 		props.put("mail.smtp.auth", true);
 		props.put("mail.smtp.starttls.enable", true);
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 		mailPersis = new MailPersisance();
-
-		JFileChooser jFileChooser = new JFileChooser(".");
+		this.file = file;
+		this.recipient = recipient;
+		
+	}
+	@Override
+	public void run()
+	{
+		sendMail(recipient);
+		/*JFileChooser jFileChooser = new JFileChooser(".");
 		if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			file = jFileChooser.getSelectedFile();
 			for (MailModel mail : mailPersis.getlist()) {
-				sendMail(mail.getMail());
+				
 			}
 			JOptionPane.showMessageDialog(null, "Done");
-		}
-		new Line(course);
+		}*/
+		//new Line(course);
+		
 	}
+	
 
-	public void sendMail(String Recipient) {
+	public void sendMail(String recipient) {
 		try {
 			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
@@ -59,7 +70,7 @@ public class Mail {
 			Message message = new MimeMessage(session);
 			// message.setFrom(new InternetAddress("ppinggii@gmail.com"));// ur email
 			message.setFrom(new InternetAddress(username));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(Recipient));// u
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));// u
 			// will // to
 			message.setSubject("Test Sender Message !");
 			MimeBodyPart messageBodyPart1 = new MimeBodyPart();
@@ -86,5 +97,7 @@ public class Mail {
 			e.printStackTrace();
 		}
 	}
+
+	
 
 }

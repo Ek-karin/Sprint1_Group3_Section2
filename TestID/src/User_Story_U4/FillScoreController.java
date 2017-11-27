@@ -1,32 +1,27 @@
 package User_Story_U4;
 
 import java.awt.BorderLayout;
-
 import java.awt.Dimension;
-import java.awt.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.Timer;
 
-import User_Story_U2.CheckCourseList;
 import User_Story_U2.Course;
+import User_Story_U5.Line;
 import User_Story_U5.Mail;
+import User_Story_U5.MailModel;
+import User_Story_U5.MailPersisance;
 import User_Story_U5.WriteFileXLSX;
 import User_Story_U6.Student;
 import User_Story_U7.CalculateNetScore;
 import User_Story_U8.GradeController;
-import User_Story_U8.NormReferenced;
 
 
 
@@ -232,7 +227,19 @@ public class FillScoreController {
 				JOptionPane.showMessageDialog(null, "Please Calculated Grade before.");
 			}
 			else {
-				new Mail(course);
+				JFileChooser jFileChooser = new JFileChooser(".");
+				if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					File file = jFileChooser.getSelectedFile();
+					MailPersisance mailPersis = new MailPersisance();
+					for (MailModel mail : mailPersis.getlist()) {
+						Thread t1 = new Thread(new Mail(file,mail.getMail()));
+						t1.start();	
+					}
+					JOptionPane.showMessageDialog(null, "Done");
+					Thread t2 = new Thread(new Line(course));				
+					t2.start();
+				}
+				
 			}
 		}
 		

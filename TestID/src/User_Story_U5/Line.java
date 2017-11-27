@@ -21,14 +21,22 @@ import javax.mail.internet.MimeMultipart;
 
 import User_Story_U2.Course;
 
-public class Line {
+public class Line implements Runnable
+{
 	private static final String strEndpoint = "https://notify-api.line.me/api/notify";
-
+	private Course course;
 	public Line(Course course) {
-		callEvent("9SmHQGowLz0VlRHNseuTOStdr9c93guWLo3moaRek2W", "***ประกาศ !!! ***\nทางอาจารย์ได้ส่งเกรดประจำวิชา "
-				+ course.getCourseID() +" "+course.getCourseName() + "เรียบร้อยเเล้ว !!@!\n");
+		this.course = course;
 	}
-
+	@Override
+	public void run()
+	{
+		
+		callEvent("9SmHQGowLz0VlRHNseuTOStdr9c93guWLo3moaRek2W", "Release The Kraken");
+		/*callEvent("9SmHQGowLz0VlRHNseuTOStdr9c93guWLo3moaRek2W", "***ประกาศ !!! ***\nทางอาจารย์ได้ส่งเกรดประจำวิชา "
+				+ course.getCourseID() +" "+course.getCourseName() + "เรียบร้อยเเล้ว !!@!\n");*/
+		
+	}
 	public boolean callEvent(String token, String message) {
 		boolean result = false;
 		try {
@@ -73,4 +81,6 @@ public class Line {
 			return "";
 		return Pattern.compile(regex).matcher(value).replaceAll(replacement);
 	}
+
+	
 }
