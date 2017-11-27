@@ -27,25 +27,15 @@ public class Mail {
 	private final String password = "cs284284";
 	//private static String recipient = "studentrecipient284@hotmail.com";
 	private static String recipient = "ppinggii@gmail.com";
-	
+	private MailPersisance mailPersis;
 
-	/*public static void main(String[] agrs) {
-		Mail m = new Mail();
-
-		props = new Properties();
-		props.put("mail.smtp.auth", true);
-		props.put("mail.smtp.starttls.enable", true);
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
-		m.sendMail(recipient);
-	}*/
-	
 	public Mail() {
 		props = new Properties();
 		props.put("mail.smtp.auth", true);
 		props.put("mail.smtp.starttls.enable", true);
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
+		mailPersis = new MailPersisance();
 		sendMail(recipient);
 	}
 
@@ -57,7 +47,10 @@ public class Mail {
 				}
 			});
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("ppinggii@gmail.com"));// ur email
+			//message.setFrom(new InternetAddress("ppinggii@gmail.com"));// ur email
+			for(MailModel m : mailPersis.getlist()) {
+				message.setFrom(new InternetAddress(m.getMail()));
+			}
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(Recipient));// u
 			// will // to
 			message.setSubject("เธ—เธ”เธชเธญเธ�เธ�เธฒเธฃเธชเน�เธ� e-mail เธ�เธฐเธ�เธฃเธฑเธ�เธ�เธฐ");
