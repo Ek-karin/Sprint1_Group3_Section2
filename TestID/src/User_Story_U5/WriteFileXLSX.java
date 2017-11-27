@@ -54,7 +54,7 @@ public class WriteFileXLSX {
 			for(int i = 0;i<course.getProfessor().length;i++) {
 				temp+=course.getProfessor()[i]+",";
 			}
-			rowTName.createCell(0).setCellValue(temp);
+			rowTName.createCell(0).setCellValue("Professor : "+temp);
 			RowNum++;
 			XSSFRow rowIntro = sheet.createRow(RowNum);
 			rowIntro.createCell(0).setCellValue("StudentList");

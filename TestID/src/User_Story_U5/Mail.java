@@ -53,7 +53,7 @@ public class Mail {
 			}
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(Recipient));// u
 			// will // to
-			message.setSubject("เธ—เธ”เธชเธญเธ�เธ�เธฒเธฃเธชเน�เธ� e-mail เธ�เธฐเธ�เธฃเธฑเธ�เธ�เธฐ");
+			message.setSubject("Test Sender Message !");
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
 			Multipart multipart = new MimeMultipart();
 
@@ -66,7 +66,7 @@ public class Mail {
 			DataSource source = new FileDataSource(file);
 			messageBodyPart.setDataHandler(new DataHandler(source));
 			messageBodyPart.setFileName(file.getName());
-			String description = "เธ�เธตเน�เธ�เธทเธญเธ�เธฒเธฃเน€เธ—เธชเธ�เธฐเธ�เธฃเธฑเธ�เธ�เธก";
+			String description = "Take it please !!";
 			messageBodyPart.setText(description);
 			multipart.addBodyPart(messageBodyPart);
 			

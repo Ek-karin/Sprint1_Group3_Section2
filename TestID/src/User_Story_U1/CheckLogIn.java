@@ -2,7 +2,8 @@ package User_Story_U1;
 
 import java.io.File;
 
-import User_Story_U2.SelectCourseFrame;
+import User_Story_U2.CourseSelectionUI;
+
 
 
 
@@ -39,11 +40,11 @@ public class CheckLogIn {
 	
 	public void nextStepBeforeCheck(boolean check) {
 		if(check) {
-	
-			new SelectCourseFrame();
+			//new SelectCourseFrame();
+			new CourseSelectionUI();
 		}
 		else {
-			System.out.println("Show massage invalid to Login panel");
+			//System.out.println("Show massage invalid to Login panel");
 		}
 	}
 

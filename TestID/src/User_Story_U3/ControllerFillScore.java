@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import User_Story_U1.LoginFrame;
+
 import User_Story_U2.CheckCourseList;
 import User_Story_U2.Course;
 import User_Story_U2.CourseList;
