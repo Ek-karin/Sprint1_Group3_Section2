@@ -12,7 +12,7 @@ public class MailPersisance {
 	
 	private ArrayList<MailModel> mail;
 	private final String FILE_PATH = "./mail/";
-	private final String FILE_NAME = "emailClasslist";	
+	private final String FILE_NAME = "mailTest";	
 	private final String FILE_TYPE = ".csv";
 	public MailPersisance() {
 		mail = new ArrayList<>();

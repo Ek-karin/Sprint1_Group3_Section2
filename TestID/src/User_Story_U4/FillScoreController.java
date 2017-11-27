@@ -232,7 +232,7 @@ public class FillScoreController {
 				JOptionPane.showMessageDialog(null, "Please Calculated Grade before.");
 			}
 			else {
-				new Mail();
+				new Mail(course);
 			}
 		}
 		

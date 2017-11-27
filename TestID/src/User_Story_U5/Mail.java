@@ -1,8 +1,6 @@
 package User_Story_U5;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -21,24 +19,34 @@ import javax.mail.internet.MimeMultipart;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import User_Story_U2.Course;
+
 public class Mail {
 	private static Properties props;
 	private final String username = "studenttestmail284@gmail.com"; // ur email
 	private final String password = "cs284284";
-	//private static String recipient = "studentrecipient284@hotmail.com";
-	//private static String recipient = "ppinggii@gmail.com";
+	// private static String recipient = "studentrecipient284@hotmail.com";
+	// private static String recipient = "ppinggii@gmail.com";
+	private File file;
 	private MailPersisance mailPersis;
 
-	public Mail() {
+	public Mail(Course course) {
 		props = new Properties();
 		props.put("mail.smtp.auth", true);
 		props.put("mail.smtp.starttls.enable", true);
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 		mailPersis = new MailPersisance();
-		for(MailModel mail : mailPersis.getlist()) {
-			sendMail(mail.getMail());
+
+		JFileChooser jFileChooser = new JFileChooser(".");
+		if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			file = jFileChooser.getSelectedFile();
+			for (MailModel mail : mailPersis.getlist()) {
+				sendMail(mail.getMail());
+			}
+			JOptionPane.showMessageDialog(null, "Done");
 		}
+		new Line(course);
 	}
 
 	public void sendMail(String Recipient) {
@@ -49,7 +57,7 @@ public class Mail {
 				}
 			});
 			Message message = new MimeMessage(session);
-			//message.setFrom(new InternetAddress("ppinggii@gmail.com"));// ur email
+			// message.setFrom(new InternetAddress("ppinggii@gmail.com"));// ur email
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(Recipient));// u
 			// will // to
@@ -59,10 +67,7 @@ public class Mail {
 			Multipart multipart = new MimeMultipart();
 
 			// attached 1 --------------------------------------------
-			JFileChooser jFileChooser = new JFileChooser(".");
-			//jFileChooser.showOpenDialog(null);
-			if(jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			File file = jFileChooser.getSelectedFile();
+			// jFileChooser.showOpenDialog(null);
 			String description = "Open file below here";
 			messageBodyPart1.setText(description);
 			DataSource source = new FileDataSource(file);
@@ -70,14 +75,12 @@ public class Mail {
 			messageBodyPart2.setFileName(file.getName());
 			multipart.addBodyPart(messageBodyPart1);
 			multipart.addBodyPart(messageBodyPart2);
-			
+
 			// ------------------------------------------------------
 
 			message.setContent(multipart);
 
 			Transport.send(message);
-			JOptionPane.showMessageDialog(null, "Done");
-			}
 
 		} catch (MessagingException e) {
 			e.printStackTrace();
