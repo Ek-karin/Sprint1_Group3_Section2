@@ -38,9 +38,6 @@ public class MailPersisance {
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
-		for(MailModel m : mail) {
-			System.out.println(m.toString());
-		}
 	}
 	
 	public ArrayList<MailModel> getlist(){

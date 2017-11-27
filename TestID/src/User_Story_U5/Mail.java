@@ -26,7 +26,7 @@ public class Mail {
 	private final String username = "studenttestmail284@gmail.com"; // ur email
 	private final String password = "cs284284";
 	//private static String recipient = "studentrecipient284@hotmail.com";
-	private static String recipient = "ppinggii@gmail.com";
+	//private static String recipient = "ppinggii@gmail.com";
 	private MailPersisance mailPersis;
 
 	public Mail() {
@@ -36,7 +36,9 @@ public class Mail {
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 		mailPersis = new MailPersisance();
-		sendMail(recipient);
+		for(MailModel mail : mailPersis.getlist()) {
+			sendMail(mail.getMail());
+		}
 	}
 
 	public void sendMail(String Recipient) {
@@ -48,13 +50,12 @@ public class Mail {
 			});
 			Message message = new MimeMessage(session);
 			//message.setFrom(new InternetAddress("ppinggii@gmail.com"));// ur email
-			for(MailModel m : mailPersis.getlist()) {
-				message.setFrom(new InternetAddress(m.getMail()));
-			}
+			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(Recipient));// u
 			// will // to
 			message.setSubject("Test Sender Message !");
-			MimeBodyPart messageBodyPart = new MimeBodyPart();
+			MimeBodyPart messageBodyPart1 = new MimeBodyPart();
+			MimeBodyPart messageBodyPart2 = new MimeBodyPart();
 			Multipart multipart = new MimeMultipart();
 
 			// attached 1 --------------------------------------------
@@ -62,13 +63,13 @@ public class Mail {
 			//jFileChooser.showOpenDialog(null);
 			if(jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			File file = jFileChooser.getSelectedFile();
-			messageBodyPart = new MimeBodyPart();
+			String description = "Open file below here";
+			messageBodyPart1.setText(description);
 			DataSource source = new FileDataSource(file);
-			messageBodyPart.setDataHandler(new DataHandler(source));
-			messageBodyPart.setFileName(file.getName());
-			String description = "Take it please !!";
-			messageBodyPart.setText(description);
-			multipart.addBodyPart(messageBodyPart);
+			messageBodyPart2.setDataHandler(new DataHandler(source));
+			messageBodyPart2.setFileName(file.getName());
+			multipart.addBodyPart(messageBodyPart1);
+			multipart.addBodyPart(messageBodyPart2);
 			
 			// ------------------------------------------------------
 
