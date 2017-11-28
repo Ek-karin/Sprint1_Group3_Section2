@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import org.junit.Test;
 
 import User_Story_U1.Account;
@@ -14,15 +16,20 @@ import User_Story_U1.CheckLogIn;
 public class Test_User_Story_U1 {
 
 	@Test
-	public void TestLogin() throws Exception{
+	public void TestLogin(){
 		Account id = new Account();
 		Account pass = new Account();
 		String testId= "parinya";
 		String testPass = "5909610601";
 		id.setId("parinya");
 		pass.setPassword("5909610601");
+		try{
 		assertTrue("Eror",testId.equals(id.getId()));
 		assertTrue("Eror",testPass.equals(pass.getPassword()));
+		}
+		catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Wrong input ID or Password");
+		}
 	}
 	@Test
 	public void TestEmptyLogin() throws Exception{
@@ -32,8 +39,13 @@ public class Test_User_Story_U1 {
 		String testPass = "";
 		id.setId("parinya");
 		pass.setPassword("5909610601");
+		try{
 		assertFalse("Eror",testId.equals(id.getId()));
 		assertFalse("Eror",testPass.equals(pass.getPassword()));
+		}
+		catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Wrong input ID or Password");
+		}
 	}
 	@Test
 	public void TestWrongUserLogin() throws Exception{
@@ -43,8 +55,13 @@ public class Test_User_Story_U1 {
 		String testPass = "5909610601";
 		id.setId("parinya");
 		pass.setPassword("5909610601");
+		try{
 		assertFalse("Eror",testId.equals(id.getId()));
 		assertTrue("Eror",testPass.equals(pass.getPassword()));
+		}
+		catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Wrong input ID or Password");
+		}
 	}
 	@Test
 	public void TestWrongPassLogin() throws Exception{
@@ -54,8 +71,13 @@ public class Test_User_Story_U1 {
 		String testPass = "5909680117";
 		id.setId("parinya");
 		pass.setPassword("5909610601");
+		try{
 		assertTrue("Eror",testId.equals(id.getId()));
 		assertFalse("Eror",testPass.equals(pass.getPassword()));
+		}
+		catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Wrong input ID or Password");
+		}
 	}
 	@Test
 	public void TestSpecialAlphabet() throws Exception{
@@ -65,8 +87,13 @@ public class Test_User_Story_U1 {
 		String testPass = "!#@$%^&**";
 		id.setId("parinya");
 		pass.setPassword("5909610601");
+		try{
 		assertFalse("Eror",testId.equals(id.getId()));
 		assertFalse("Eror",testPass.equals(pass.getPassword()));
+		}
+		catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Wrong input ID or Password");
+		}
 	}
 	@Test
 	public void TestSwapIdPassword() throws Exception{
@@ -76,8 +103,13 @@ public class Test_User_Story_U1 {
 		String testPass = "parinya";
 		id.setId("parinya");
 		pass.setPassword("5909610601");
+		try{
 		assertFalse("Eror",testId.equals(id.getId()));
 		assertFalse("Eror",testPass.equals(pass.getPassword()));
+		}
+		catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Wrong input ID or Password");
+		}
 	}
 
 }
