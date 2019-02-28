@@ -1,1 +1,1 @@
-test.io
+myapp.io
